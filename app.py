@@ -15,7 +15,7 @@ def local_css(file_name):
     with open(file_name) as fn:
         st.markdown(f"<style>{fn.read()}</style>", unsafe_allow_html=True)
 
-local_css("streamlit_styles.css")
+local_css("style.css")
 
 # Load header section from external file
 def load_header_html(file_path):

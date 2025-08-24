@@ -7,6 +7,15 @@
   box-sizing: border-box;
 }
 
+/* Full viewport styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 /* Hide Streamlit default elements */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
@@ -17,13 +26,34 @@ footer {visibility: hidden;}
     background-color: #202124;
     color: #e8eaed;
     font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
 }
 
 /* Override Streamlit's main container */
 .main .block-container {
     padding: 0 !important;
     max-width: none !important;
+    width: 100% !important;
     margin: 0 !important;
+}
+
+/* Ensure full width for all sections */
+section.main > div {
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+/* Remove any default Streamlit margins */
+.element-container {
+    margin: 0 !important;
+}
+
+/* Full width for markdown containers */
+.stMarkdown > div {
+    width: 100% !important;
 }
 
 .stMarkdown {
@@ -77,7 +107,7 @@ footer {visibility: hidden;}
 .text-dark-text-secondary { color: #9aa0a6; }
 .text-google-blue { color: #1a73e8; }
 .text-google-blue-light { color: #8ab4f8; }
-.hover\:text-google-blue-lighter:hover { color: #1a73e8; }
+.hover\:text-google-blue-lighter:hover { color: #8ab4f8; }
 .text-google-green { color: #34a853; }
 .text-google-red { color: #ea4335; }
 .text-google-yellow { color: #fbbc04; }
@@ -85,3 +115,12 @@ footer {visibility: hidden;}
 
 /* Custom font family (note: font must be loaded from somewhere) */
 .font-google { font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif; }
+
+/* Remove underline from header links */
+header a {
+    text-decoration: none !important;
+}
+
+header a:hover {
+    text-decoration: none !important;
+}
