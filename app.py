@@ -5,6 +5,7 @@ from urllib.parse import quote_plus
 import feedparser
 import datetime
 from dateutil import parser
+from articles_template import generate_articles_html
 
 
 # Configure the page
@@ -45,6 +46,11 @@ def load_tabs_html(file_path):
 
 tabs = load_tabs_html("tabs.html")
 st.markdown(tabs, unsafe_allow_html=True)
+
+# Load results header section from external file
+def load_results_header_html(file_path):
+    with open(file_path, "r") as f:
+        return f.read()
 
 # Helper functions
 def build_google_news_rss_url(keyword: str) -> str:
@@ -122,16 +128,7 @@ with col3:
 
 if fetch_btn and rss_urls:
     # Results section header
-    results_header_html = """
-    <div style="width: 100vw; margin-left: calc(-50vw + 50%); position: relative;">
-        <section class="results-section">
-            <div class="container">
-                <h2 class="results-title">📰 Latest Headlines</h2>
-                <p class="results-subtitle">Top news articles with AI-powered sentiment analysis</p>
-            </div>
-        </section>
-    </div>
-    """
+    results_header_html = load_results_header_html("results_header.html")
     st.markdown(results_header_html, unsafe_allow_html=True)
     
     with st.spinner("Fetching latest news..."):
@@ -162,90 +159,8 @@ if fetch_btn and rss_urls:
             all_articles.sort(key=lambda x: x["published"], reverse=True)
             top_articles = all_articles[:10]
             
-            # Create full-width container for articles
-            articles_html = """
-            <div style="width: 100vw; margin-left: calc(-50vw + 50%); position: relative; padding: 0 0 60px 0;">
-                <div class="container">
-            """
-            
-            # Featured article layout (first 3 articles)
-            if len(top_articles) >= 3:
-                articles_html += '<div class="featured-grid">'
-                
-                # Main featured article
-                main_article = top_articles[0]
-                articles_html += f"""
-                <div class="main-article">
-                    <a href="{main_article['link']}" class="main-article-title" target="_blank">
-                        {main_article['title']}
-                    </a>
-                    <div class="article-meta">
-                        <div class="news-source">
-                            <div class="source-icon">{main_article['source_icon']}</div>
-                            <span>Keyword: {main_article['keyword']}</span>
-                        </div>
-                        <span>•</span>
-                        <span>{main_article['time_ago']}</span>
-                    </div>
-                    <div class="article-stats">
-                        <span class="{main_article['sentiment_class']}">{main_article['sentiment']}</span>
-                    </div>
-                </div>
-                """
-                articles_html += '<div class="side-articles">'
-                for article in top_articles[1:3]:
-                    articles_html += f"""
-                    <div class="side-article">
-                        <a href="{article['link']}" class="side-article-title" target="_blank">
-                            {article['title'][:80]}{'...' if len(article['title']) > 80 else ''}
-                        </a>
-                        <div class="article-meta">
-                            <div class="news-source">
-                                <div class="source-icon">{article['source_icon']}</div>
-                                <span>{article['keyword']}</span>
-                            </div>
-                            <span>•</span>
-                            <span>{article['time_ago']}</span>
-                        </div>
-                        <div class="article-stats">
-                            <span class="{article['sentiment_class']}">{article['sentiment']}</span>
-                        </div>
-                    </div>
-                    """
-                
-                articles_html += '</div></div>'  # Close side-articles and featured-grid
-                
-                # Remaining articles
-                remaining_articles = top_articles[3:]
-            else:
-                remaining_articles = top_articles
-            
-            # Regular article cards
-            for article in remaining_articles:
-                articles_html += f"""
-                <div class="article-card">
-                    <a href="{article['link']}" class="article-title" target="_blank">
-                        {article['title']}
-                    </a>
-                    <div class="article-meta">
-                        <div class="news-source">
-                            <div class="source-icon">{article['source_icon']}</div>
-                            <span>Keyword: {article['keyword']}</span>
-                        </div>
-                        <span>•</span>
-                        <span>{article['time_ago']}</span>
-                    </div>
-                    <div class="article-stats">
-                        <span class="{article['sentiment_class']}">{article['sentiment']}</span>
-                    </div>
-                </div>
-                """
-            
-            articles_html += """
-                </div>  <!-- Close container -->
-            </div>  <!-- Close full-width wrapper -->
-            """
-            
+            # Generate articles HTML using template
+            articles_html = generate_articles_html(top_articles)
             st.markdown(articles_html, unsafe_allow_html=True)
         else:
             st.warning("No articles found. Please try different keywords.")
