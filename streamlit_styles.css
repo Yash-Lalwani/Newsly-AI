@@ -1,0 +1,87 @@
+@import url("https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css");
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Hide Streamlit default elements */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+.stDeployButton {display:none;}
+
+/* Main app styling */
+.stApp {
+    background-color: #202124;
+    color: #e8eaed;
+    font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Override Streamlit's main container */
+.main .block-container {
+    padding: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+}
+
+.stMarkdown {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Input styling for Streamlit components */
+.stTextInput > div > div > input {
+    background-color: #383b40 !important;
+    border: 2px solid #5f6368 !important;
+    color: #e8eaed !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    font-size: 16px !important;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #8ab4f8 !important;
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2) !important;
+}
+
+/* Button styling for Streamlit components */
+.stButton > button {
+    background: linear-gradient(135deg, #1a73e8 0%, #8ab4f8 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 16px 32px !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px rgba(26, 115, 232, 0.3) !important;
+}
+
+/* Hide Streamlit input labels */
+.stTextInput > label {
+    display: none !important;
+}
+
+/* Custom colors for the theme */
+.bg-dark-bg { background-color: #202124; }
+.bg-dark-surface { background-color: #303134; }
+.bg-google-blue { background-color: #1a73e8; }
+.border-google-green { border-color: #34a853; }
+.text-dark-text { color: #e8eaed; }
+.text-dark-text-secondary { color: #9aa0a6; }
+.text-google-blue { color: #1a73e8; }
+.text-google-blue-light { color: #8ab4f8; }
+.hover\:text-google-blue-lighter:hover { color: #1a73e8; }
+.text-google-green { color: #34a853; }
+.text-google-red { color: #ea4335; }
+.text-google-yellow { color: #fbbc04; }
+.border-dark-border { border-color: #5f6368; }
+
+/* Custom font family (note: font must be loaded from somewhere) */
+.font-google { font-family: 'Google Sans', 'Helvetica Neue', Arial, sans-serif; }
