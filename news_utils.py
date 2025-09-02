@@ -31,11 +31,11 @@ def get_source_icon(title: str) -> str:
     elif "FOX" in title.upper():
         return "FOX"
     elif "REUTERS" in title.upper():
-        return "R"
+        return "RUT"
     elif "AP" in title.upper():
         return "AP"
     else:
-        return "N"
+        return "GGL"
 
 
 # This function formats the time as a 'time ago' string for cleaner display
